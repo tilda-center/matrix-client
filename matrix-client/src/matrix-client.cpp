@@ -1,8 +1,14 @@
-#include <iostream>
+#include <FL/Fl.H>
+#include <FL/Fl_Window.H>
 
-
-int main()
+int main(int argc, char **argv)
 {
-  std::cout << "Hello World" << std::endl;
-  return 0;
+  Fl_Window *window = new Fl_Window(340, 380);
+  window->begin();
+  {
+    //window widgets here
+  }
+  window->end();
+  window->show(argc, argv);
+  return Fl::run();
 }

@@ -10,3 +10,4 @@ build/
 cbsd.conf
 site.retry
 vars.mk
+matrix-client/matrix-client
