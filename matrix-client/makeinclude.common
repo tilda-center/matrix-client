@@ -1,0 +1,3 @@
+PROGRAM = matrix-client
+OBJECTS = $(CXXFILES:.cpp=.o)
+CXXFLAGS += -I .
