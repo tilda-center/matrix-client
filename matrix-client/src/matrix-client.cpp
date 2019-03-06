@@ -9,9 +9,15 @@
 #include <FL/Fl_Text_Display.H>
 #include <arpa/inet.h>
 #include <iostream>
+#include <tuple>
+
+
+typedef std::tuple<Fl_Text_Buffer *, Fl_Input *> Params;
+
 
 Fl_Hold_Browser *bro = 0;
 Fl_Group *grp[3] = { 0,0,0 };
+
 
 void SelectGroup_CB(Fl_Widget*, void*) {
     for ( int t=0; t<3; t++ ) {
@@ -19,6 +25,19 @@ void SelectGroup_CB(Fl_Widget*, void*) {
         else                         { grp[t]->hide(); }
     }
 }
+
+
+void sendMessage(Fl_Widget *w, void *v)
+{
+  Params *p = (Params *)v;
+  auto buffer = std::get<0>(*p);
+  auto input = std::get<1>(*p);
+  buffer->append(input->value());
+  buffer->append("\n");
+  input->value("");
+  input->take_focus();
+}
+
 
 int main(int argc, char **argv)
 {
@@ -37,8 +56,13 @@ int main(int argc, char **argv)
         chat->buffer(*buff);
         buff->append("Mekanix: cao\n");
         buff->append("Momo: oj\n");
-        new Fl_Input(210,245,300,20,"Message:");
-        new Fl_Button(510,245,40,20,"Send");
+        Fl_Input *input = new Fl_Input(210,245,300,20,"Message:");
+        input->take_focus();
+        Fl_Button *button = new Fl_Button(510,245,40,20,"Send");
+        Params *p = new Params;
+        (*p) = std::make_tuple(buff, input);
+        button->callback(sendMessage, p);
+        button->shortcut(FL_Enter);
     grp[0]->end();
 
     grp[1] = new Fl_Group(130,10,430,260,"Dervish");
