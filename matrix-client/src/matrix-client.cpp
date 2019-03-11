@@ -58,7 +58,8 @@ int main(int argc, char **argv)
 {
 
   Fl_Window *window = new Fl_Window(570, 280);
-  window->begin();
+  window->resizable(*window);
+  window->begin(window);
   {
     bro = new Fl_Hold_Browser(10, 10, 110, 260);
 
