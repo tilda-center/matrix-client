@@ -1,5 +1,5 @@
 PROGRAM = matrix-client
 OBJECTS = $(CXXFILES:.cpp=.o)
 CXXFLAGS != fltk-config --cxxflags
-CXXFLAGS += -I .
+CXXFLAGS += -I . -std=c++14
 LDFLAGS != fltk-config --ldflags
