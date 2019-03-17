@@ -23,9 +23,9 @@ class Params
 
 
 Fl_Hold_Browser *bro = nullptr;
-Fl_Group *group = nullptr;
 Fl_Text_Display *chat = nullptr;
 Fl_Input *input = nullptr;
+Fl_Button *button = nullptr;
 
 
 void selectGroup(Fl_Widget *, void*)
@@ -57,39 +57,36 @@ void sendMessage(Fl_Widget *, void *v)
 int main(int argc, char **argv)
 {
 
-  Fl_Window *window = new Fl_Window(570, 280);
-  window->resizable(*window);
+  Fl_Window *window = new Fl_Window(800, 450);
   window->begin();
   {
-    bro = new Fl_Hold_Browser(10, 10, 110, 260);
-
-    group = new Fl_Group(130, 10, 430, 260, "Mekanix");
-    group->box(FL_ENGRAVED_BOX);
-    group->align(FL_ALIGN_INSIDE|FL_ALIGN_TOP);
-    group->labelsize(24);
-    group->begin();
+    bro = new Fl_Hold_Browser(10, 10, 150, 430);
+    chat = new Fl_Text_Display(170, 10, 620, 390);
+    Fl_Group *grpInput = new Fl_Group(170,410,620,30);
+    grpInput->begin();
     {
-        chat = new Fl_Text_Display(135, 40, 420, 200);
-        Fl_Text_Buffer *buff = new Fl_Text_Buffer();
-        chat->buffer(*buff);
-        buff->append("Mekanix: cao\n");
-        buff->append("Momo: oj\n");
-        input = new Fl_Input(210,245,300,20,"Message:");
-        input->take_focus();
-        Fl_Button *button = new Fl_Button(510,245,40,20,"Send");
-        Params *p = new Params(buff);
-        bro->add("Meka", p);
-        button->callback(sendMessage, p);
-        button->shortcut(FL_Enter);
-
-        buff = new Fl_Text_Buffer();
-        p = new Params(buff);
-        bro->add("Dervish", p);
+      input = new Fl_Input(170,410,550,30);
+      button = new Fl_Button(730,410,60,30,"Send");
+      grpInput->resizable(input);
     }
-    group->end();
-    group->show();
+    grpInput->end();
+    input->take_focus();
+
+    Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+    chat->buffer(*buff);
+    buff->append("Mekanix: cao\n");
+    buff->append("Momo: oj\n");
+    Params *p = new Params(buff);
+    bro->add("Meka", p);
+    button->callback(sendMessage, p);
+    button->shortcut(FL_Enter);
+
+    buff = new Fl_Text_Buffer();
+    p = new Params(buff);
+    bro->add("Dervish", p);
     bro->callback(selectGroup);
     bro->select(1);
+    window->resizable(chat);
   }
   window->end();
   window->show(argc, argv);
