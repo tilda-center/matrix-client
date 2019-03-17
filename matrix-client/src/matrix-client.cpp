@@ -25,6 +25,7 @@ class Params
 Fl_Hold_Browser *bro = nullptr;
 Fl_Text_Display *chat = nullptr;
 Fl_Input *input = nullptr;
+Fl_Button *button = nullptr;
 
 
 void selectGroup(Fl_Widget *, void*)
@@ -63,9 +64,11 @@ int main(int argc, char **argv)
     chat = new Fl_Text_Display(170, 10, 620, 390);
     Fl_Group *grpInput = new Fl_Group(170,410,620,30);
     grpInput->begin();
-    input = new Fl_Input(170,410,550,30);
-    Fl_Button *button = new Fl_Button(730,410,60,30,"Send");
-    grpInput->resizable(input);
+    {
+      input = new Fl_Input(170,410,550,30);
+      button = new Fl_Button(730,410,60,30,"Send");
+      grpInput->resizable(input);
+    }
     grpInput->end();
     input->take_focus();
 
